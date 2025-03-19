@@ -1,13 +1,13 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Schema()
-export class Order extends Document {
-    @Prop({ required: true })
+@Entity()
+export class Order {
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
     email: string;
 
-    @Prop({ required: true, type: Array })
+    @Column('simple-json') // ✅ Stores items as JSON in SQLite/PostgreSQL
     items: { id: number; name: string; quantity: number }[];
 }
-
-export const OrderSchema = SchemaFactory.createForClass(Order);
